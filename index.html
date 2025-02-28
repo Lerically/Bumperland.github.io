@@ -8,8 +8,8 @@
 
   <!-- Navnav+ CSS (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.css" />
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
   <!-- Uiverse (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/uiverse/uiverse@latest/dist/uiverse.min.css">
 
@@ -24,17 +24,17 @@
       box-sizing: inherit;
     }
 
-    /* 移除水平滚动条，保留垂直滚动条并自定义样式 */
+    /* 隐藏水平滚动条，保留垂直滚动条 */
     html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden; /* 隐藏水平滚动条 */
+      overflow-x: hidden;
       font-family: Arial, sans-serif;
       color: #333;
       line-height: 1.6;
       background-color: #fff;
     }
-    /* 自定义垂直滚动条(仅WebKit内核) */
+    /* 自定义垂直滚动条 (仅 WebKit) */
     ::-webkit-scrollbar {
       width: 12px;
     }
@@ -49,12 +49,14 @@
       background: #666;
     }
 
-    /* ========== 顶部导航 (Sticky) ========== */
+    /* ========== 顶部导航 (Fixed) ========== */
     header {
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 999;
-      background: #fff;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95); /* 半透明背景，可避免完全遮挡Banner */
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     .top-nav {
@@ -67,9 +69,11 @@
       min-height: 60px;
     }
     .nav-brand {
-      font-size: 0.6rem;
+      font-size: 2rem;
       font-weight: bold;
       color: #333;
+      text-align: center;
+      margin: 0 auto;
     }
     .nav-menu {
       display: flex;
@@ -89,7 +93,7 @@
     .nav-menu li a:hover {
       background-color: #f2f2f2;
     }
-    /* 当菜单被选中时，在文字右侧显示箭头 */
+    /* 当前激活菜单右侧显示箭头 */
     .nav-menu li a.active::after {
       content: "→";
       margin-left: 0.5em;
@@ -104,7 +108,6 @@
       text-align: center;
       padding: 1em;
     }
-    /* 只显示社交图标 */
     .social-icons {
       display: flex;
       justify-content: center;
@@ -133,15 +136,14 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* 每个section的title (h2)居中并放大 */
+    /* 每个 section 的标题居中放大 */
     section h2 {
       text-align: center;
-      font-size: 2rem; /* 放大 */
-      margin-bottom: 1em; /* 留点间距 */
+      font-size: 2rem;
+      margin-bottom: 1em;
     }
 
-    /* ========== 全宽Banner，高度=100vh ========== */
+    /* ========== 全宽Banner (100vh) 与 Banner Title ========== */
     .fullwidth-banner {
       position: relative;
       width: 100vw;
@@ -155,33 +157,56 @@
       height: 100%;
       object-fit: cover;
     }
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
 
-    /* ========== Home部分：Brief + Trailer分开卡片 ========== */
+    /* ========== Home部分：Trailer在上，Brief在下 ========== */
     #home {
       background-color: #f7f7f7;
+      margin-top: 0; /* 确保Banner紧接着Home，无空隙 */
     }
     .home-content {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 2em;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
     }
-    .text-blurb,
+    /* Trailer卡片 */
     .video-embed {
-      flex: 1 1 300px;
+      width: 100%;
       background: #fff;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
       border-radius: 10px;
       padding: 1em;
-      margin: 0 auto;
     }
     .video-embed video {
       width: 100%;
       height: auto;
       display: block;
     }
+    /* Brief卡片 */
+    .text-blurb {
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 1em;
+      text-align: center;
+    }
+    .text-blurb p {
+      font-size: 0.9rem;
+    }
 
-    /* ========== Features (无弹窗,文字) + 卡片圆角 ========== */
+    /* ========== Features ========== */
     #features {
       background: #fff;
     }
@@ -221,7 +246,7 @@
       object-fit: cover;
     }
 
-    /* ========== Art Book (aspect-ratio + 100%) ========== */
+    /* ========== Art Book ========== */
     #artbook {
       background: #f7f7f7;
     }
@@ -260,7 +285,7 @@
       margin-top: 1em;
     }
 
-    /* ========== About Us(翻转卡片 + 头像大小=120px) ========== */
+    /* ========== About Us ========== */
     #aboutus {
       background: #fff;
     }
@@ -275,7 +300,7 @@
     }
     .team-member {
       width: 500px;
-      height: 340px; /* 适度加高，容纳更多文字 */
+      height: 340px;
       perspective: 1000px;
       cursor: pointer;
     }
@@ -291,7 +316,7 @@
     }
     .flip-front, .flip-back {
       position: absolute;
-      width: 100%; 
+      width: 100%;
       height: 100%;
       border-radius: 10px;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -306,10 +331,9 @@
     .flip-front {
       background: #f9f9f9;
     }
-    /* 头像固定120px */
     .flip-front img {
       width: auto;
-      height: 120px; 
+      height: 120px;
       border-radius: 50%;
       margin-bottom: 0.5em;
     }
@@ -319,10 +343,10 @@
       transform: rotateY(180deg);
     }
 
-    /* ========== 自定义按钮(暗色背景+悬浮阴影) ========== */
+    /* ========== 自定义按钮 ========== */
     .uiverse-button {
       border: none;
-      background-color: #444; 
+      background-color: #444;
       color: #fff;
       border-radius: 0.6em;
       transition: box-shadow 0.3s, transform 0.2s;
@@ -334,25 +358,23 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       transform: translateY(-2px);
     }
+
+    /* ========== Tab Navigation: 默认仅显示 active section ========== */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
   </style>
 </head>
 <body>
 
-  <!-- 顶部导航(Sticky) -->
+  <!-- 顶部导航 (Sticky) -->
   <header>
     <nav class="top-nav">
-      <!-- 标题(brand)左边 => 可改成居中, but let's keep the request to keep brand on left or center?
-           We'll keep as is, or center? The user requested "Title居中并且放大"? 
-           Let's do it here: We'll center using margin: 0 auto. -->
-      <div class="nav-brand" style="margin:0 auto; text-align:center; font-size:2rem;">
-        Bubono’s Bumperland
-      </div>
-      <!-- 导航菜单 (在右侧) -->
-      <ul class="nav-menu" style="margin-left:auto;">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#artbook">Art Book</a></li>
-        <li><a href="#aboutus">About Us</a></li>
+      <div class="nav-brand">Bubono’s Bumperland</div>
+      <ul class="nav-menu">
+        <li><a href="#home" class="tab-link" data-tab="home">Home</a></li>
+        <li><a href="#features" class="tab-link" data-tab="features">Features</a></li>
+        <li><a href="#artbook" class="tab-link" data-tab="artbook">Art Book</a></li>
+        <li><a href="#aboutus" class="tab-link" data-tab="aboutus">About Us</a></li>
       </ul>
     </nav>
   </header>
@@ -360,69 +382,66 @@
   <!-- 全宽Banner (100vh) -->
   <div class="fullwidth-banner">
     <img src="./asset/BannerImage.png" alt="Giant Banner Image" loading="lazy" />
+    <div class="banner-title">Bubono’s Bumperland</div>
   </div>
 
-  <!-- Home部分 -->
-  <section id="home" class="fade-section">
+  <!-- Tab Content Sections -->
+  <section id="home" class="fade-section tab-section active">
     <h2>Game Brief</h2>
-    <div class="home-content">
-      <!-- Brief卡片 -->
-      <div class="text-blurb">
-        <p>
-          Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets more efficient, it may be time to seek out new ventures…
-        </p>
-      </div>
-      <!-- Trailer卡片 -->
-      <div class="video-embed">
+    <div class="home-content" style="flex-direction: column; align-items: center;">
+      <!-- Trailer卡片 (上) -->
+      <div class="video-embed" style="width:100%;">
         <h3>Game Trailer</h3>
         <video controls loading="lazy">
           <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
+      <!-- Brief卡片 (下) -->
+      <div class="text-blurb" style="width:100%;">
+        <p>
+          Bubono’s Bumperland, headed by the iconic Bubono the Rat, is a booming destination with endless attractions and three different branches. There’s the medieval Bubono’s Burg, the fiery Bubono’s Abyss, and the outer reaches of Bubono’s Big Bang. You play as a mechanic and your job is to maintain the park and its rides and make sure every attendant is having a great time. Beware, as the staff hierarchy gets more efficient, it may be time to seek out new ventures…
+
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- Features(无弹窗) -->
-  <section id="features" class="fade-section">
+  <section id="features" class="fade-section tab-section">
     <h2>Features</h2>
     <div class="feature-cards">
-      <!-- 卡片1：Bumping and crashing -->
+      <!-- 卡片1 -->
       <div class="feature-card">
         <div class="feature-text">
           <h3>Bumping and crashing</h3>
           <p>
-            Bumping and crashing: Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact!
-            <br /><br />
-            Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!
+            Bubono’s Bumperland great Bumper Buggies are designed for chaotic uncontrollable speed and impact! Depending on what you impact, you’ll be sent off at angles and speeds that can cause all sorts of mayhem. Despite the buggy’s playful appearance, anything and everything can be rammed and smashed. With the right speed and angle, nothing is out of bounds for chaos!
+
           </p>
         </div>
         <div class="feature-image">
           <img src="./asset/Feature_1.png" alt="Feature 1" loading="lazy" />
         </div>
       </div>
-      <!-- 卡片2：Smart Enemies -->
+      <!-- 卡片2 -->
       <div class="feature-card">
         <div class="feature-text">
           <h3>Smart Enemies</h3>
           <p>
-            The park branches are full of colorful characters built for each theme.
-            <br /><br />
-            Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams.
+            The park branches are full of colorful characters built for each theme. Projectiles fly across the park from catapults attempting to pelt pillory peasants with tomatoes, imp costumed attendees parade around with pitchforks, and UFOs buzz in the air hoping to snatch up anything that crosses their beams.
+
           </p>
         </div>
         <div class="feature-image">
           <img src="./asset/Feature_2.png" alt="Feature 2" loading="lazy" />
         </div>
       </div>
-      <!-- 卡片3：Special abilities -->
+      <!-- 卡片3 -->
       <div class="feature-card">
         <div class="feature-text">
           <h3>Special abilities</h3>
           <p>
-            As a mechanic, you can upgrade your car depending on which foes you’ve overcome.
-            <br /><br />
-            Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!
+            As a mechanic, you have the ability to upgrade your car depending on which foes you’ve overcome. Anything you build onto your car aids in your pursuit of chaos, so go wild with any upgrade you come across!
           </p>
         </div>
         <div class="feature-image">
@@ -432,8 +451,7 @@
     </div>
   </section>
 
-  <!-- Art Book(带轮播按钮和PDF) -->
-  <section id="artbook" class="fade-section">
+  <section id="artbook" class="fade-section tab-section">
     <h2>Art Book</h2>
     <div class="artbook-container">
       <img id="artbookImage" src="./asset/BannerImage.png" alt="Art Book" loading="lazy" />
@@ -445,10 +463,12 @@
     </div>
   </section>
 
-  <!-- About Us(五位成员翻转卡片, 保留所有介绍) -->
-  <section id="aboutus" class="fade-section">
+  <section id="aboutus" class="fade-section tab-section">
     <h2>About Us</h2>
     <div class="team-intro">
+      <p>
+        Each Sprint lasts about two weeks...
+      </p>
     </div>
     <div class="team-members">
       <!-- 1. Douglas -->
@@ -462,6 +482,7 @@
             <h3>Learn More</h3>
             <p style="margin-top:0.5em;">
               Douglas is a programmer, level designer, and game designer and was the lead behind the direction of Bubono’s Bumperland. You can check out his process when detailing the game’s physics, level design, mechanics design, and team leadership [here].
+
             </p>
           </div>
         </div>
@@ -477,6 +498,7 @@
             <h3>Learn More</h3>
             <p style="margin-top:0.5em;">
               Giovanni is an effects artist, level designer, game designer, and 3D generalist behind creating the VFX you see throughout the game. He also contributed to the level design for each of the levels along with designing and coding the in-game UX interactions. You can check out the breakdowns of his VFX, level design, and UX work [here].
+
             </p>
           </div>
         </div>
@@ -492,6 +514,7 @@
             <h3>Learn More</h3>
             <p style="margin-top:0.5em;">
               Jingxuan is the Art Lead and 3D Modeler for the project, responsible for creating 3D models and applying materials. Additionally, Jingxuan is in charge of designing and assembling the art book, ensuring a cohesive visual presentation of the project’s artistic direction. His contributions include modeling and texturing the bumper cars, as well as environmental assets such as houses, props, and foliage.
+
             </p>
           </div>
         </div>
@@ -515,13 +538,14 @@
       <div class="team-member" onclick="window.open('https://example.com/yuyan','_blank')">
         <div class="flip-inner">
           <div class="flip-front">
-            <img src="./asset/Yuyan.png" alt="Director of Character & Interface - Yuyan" loading="lazy" />
+            <img src="https://dl.dropboxusercontent.com/scl/fi/pbfsg0kvlj9di08gs61om/Yuyan.png?rlkey=t9t4w5ns1lt2kbt1s3vkog934&st=xgl7zxcx" alt="Director of Character & Interface - Yuyan" loading="lazy" />
             <p><strong>Yuyan</strong></p>
           </div>
           <div class="flip-back">
             <h3>Learn More</h3>
             <p style="margin-top:0.5em;">
               Yuyan Liu served as the character designer, 3D modeler, and 2D artist for the project, contributing to character design, asset modeling, and 2D artwork. Her responsibilities included designing, modeling, and texturing main characters, including their details and material finishes. She also did the modeling and texturing for NPCs and environmental assets, and did the design UI painting and 3D UI model to enhance the game's visual interface. Lastly, she did game illustrations that enriched the project’s narrative and aesthetic.
+
             </p>
           </div>
         </div>
@@ -529,7 +553,7 @@
     </div>
   </section>
 
-  <!-- 页面底部Footer: 只显示图标 & 版权 -->
+  <!-- 页面底部Footer -->
   <footer>
     <div class="social-icons">
       <a href="https://www.twitter.com" target="_blank">
@@ -551,7 +575,31 @@
   <!-- Navnav+ JS & 自定义交互脚本 -->
   <script src="https://cdn.jsdelivr.net/gh/cruip/css-navnav@latest/dist/navnav.min.js"></script>
   <script>
-    // ========== 1. Art Book轮播(无固定px, aspect-ratio) ==========
+    // ========== Tab Navigation: 仅显示 active section ==========
+    const tabLinks = document.querySelectorAll('.nav-menu li a');
+    const sections = document.querySelectorAll('.tab-section');
+    function showTab(tabId) {
+      sections.forEach(sec => {
+        if(sec.id === tabId) {
+          sec.classList.add('active');
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+    }
+    tabLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tabId = link.getAttribute('data-tab') || link.getAttribute('href').substring(1);
+        showTab(tabId);
+        tabLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+    // 默认显示 Home Tab
+    showTab("home");
+
+    // ========== Art Book 轮播 ==========
     const artImages = [
       './asset/BannerImage.png',
       './asset/Feature_1.png',
@@ -571,7 +619,7 @@
       showImage(currentIndex);
     }
 
-    // ========== 2. Intersection Observer: 滚动时淡入动画 ========== 
+    // ========== Intersection Observer: 淡入动画 ==========
     const fadeSections = document.querySelectorAll('.fade-section');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -582,13 +630,11 @@
     }, { threshold: 0.2 });
     fadeSections.forEach(section => observer.observe(section));
 
-    // ========== 3. 点击菜单项 => 显示箭头(“→”)在右侧 ==========
+    // ========== 点击菜单项 => 显示箭头 ==========
     const navLinks = document.querySelectorAll('.nav-menu li a');
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        // 移除之前的active
         navLinks.forEach(lnk => lnk.classList.remove('active'));
-        // 给当前点击的添加active
         link.classList.add('active');
       });
     });
